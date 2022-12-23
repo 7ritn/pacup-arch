@@ -47,14 +47,8 @@ fi
 cp -f ./pacup /usr/local/bin/pacup
 chmod +rx /usr/local/bin/pacup
 
-if [ -d ../デスクトップ ]; then
-    cp -f ./pacup_Manual.txt ../デスクトップ
-elif [ -d ../Desktop ]; then
-    cp -f ./pacup_Manual.txt ../Desktop
-else
-    echo "Manual file copy skipped."
-    exit 1
-fi
+cp -f ./pacup_Manual.txt ${XDG_DESKTOP_DIR}
+cp -f ./pacup.desktop ${XDG_DESKTOP_DIR}
 
 echo "Success!"
 exit 0
