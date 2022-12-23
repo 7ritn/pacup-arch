@@ -1,5 +1,5 @@
 # pacup-arch
-***Simplify package updateing***
+***Simplify package updating***
 
 Arch系 もしくは Manjaro系のディストリビューションで、パッケージのアップデートをする際に  
 `sudo pacman -Syu && sudo pacman -Rns $(pacman -Qtdq) && sudo snap refresh && flatpak update && yay -Sayu`  
