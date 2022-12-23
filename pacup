@@ -2,10 +2,10 @@
 
 function usage() {
   cat <<EOM
-使用方法: $(basename "$0") [OPTION]...
-    -p          Pacmanのみ実行
-    -y          'y'の入力をスキップします
-    -h          ヘルプを表示します
+Usage: $(basename "$0") [OPTION]...
+    -p          Run Pacman only
+    -y          Skip typing 'y'
+    -h          Show help
 EOM
 }
 
@@ -41,7 +41,7 @@ function PACUP_PACMAN() {
 if [ "$PACUP_MOD" == "pacman" ]; then
    PACUP_PACMAN
   if [ $? != 0 ]; then
-    echo -e "\nPacmanコマンドの実行はRoot(管理者)権限を要求します｡\nもう一度お試しください｡\n"
+    echo -e "\nPacman command requires root privileges.\nPlease try again.\n"
     PACUP_PACMAN
   fi
   exit 0
@@ -50,10 +50,10 @@ fi
 #FPK
 PACUP_SYS
 if [ $? != 0 ]; then
-  echo -e "\nRoot(管理者)権限を要求しています｡\nもう一度お試しください｡\n"
+  echo -e "\nRequesting root privileges.\nPlease try again.\n"
   PACUP_SYS
   if [ $? != 0 ]; then
-    echo -e "\n権限の昇格に失敗したため､ 実行を終了しました｡"
+    echo -e "\nExecution terminated because privilege elevation failed."
     exit 1
   fi
 fi
