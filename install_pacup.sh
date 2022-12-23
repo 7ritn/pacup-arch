@@ -48,7 +48,7 @@ cp -f ./pacup /usr/local/bin/pacup
 chmod +rx /usr/local/bin/pacup
 
 cp -f ./pacup_Manual.txt ${XDG_DESKTOP_DIR}
-cp -f ./pacup.desktop ${XDG_DESKTOP_DIR}
+cp -f ./pacup.desktop /usr/local/share/applications/
 
 echo "Success!"
 exit 0
