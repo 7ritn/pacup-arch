@@ -27,6 +27,22 @@ command -v flatpak >/dev/null 2>&1
 if [ $? == 0 ]; then
    sed -i -e "s/#FPK/flatpak update/g" ./pacup
 fi
+command -v yay >/dev/null 2>&1
+if [ $? == 0 ]; then
+   sed -i -e "s/#AUR/yay -Sayu/g" ./pacup
+fi
+command -v paru >/dev/null 2>&1
+if [ $? == 0 ]; then
+   sed -i -e "s/#AUR/paru -Sayu/g" ./pacup
+fi
+command -v pacaur >/dev/null 2>&1
+if [ $? == 0 ]; then
+   sed -i -e "s/#AUR/pacaur -Sayu/g" ./pacup
+fi
+command -v pikaur >/dev/null 2>&1
+if [ $? == 0 ]; then
+   sed -i -e "s/#AUR/pikaur -Sayu/g" ./pacup
+fi
 
 cp -f ./pacup /usr/local/bin/pacup
 chmod +rx /usr/local/bin/pacup
