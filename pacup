@@ -3,8 +3,8 @@
 function usage() {
   cat <<EOM
 使用方法: $(basename "$0") [OPTION]...
-    -a          APTのみ実行
-    -y		'y'の入力をスキップします
+    -p          Pacmanのみ実行
+    -y          'y'の入力をスキップします
     -h          ヘルプを表示します
 EOM
 }
@@ -12,10 +12,10 @@ EOM
 while (($#>0)); do
   case $1 in
     a|-a|--apt)
-      PACUP_MOD="apt"
+      PACUP_MOD="pacman"
       ;;
     y|-y|--yes)
-      PACUP_YES=" -y"
+      PACUP_YES="yes"
       ;;
     h|-h|--help)
       usage
@@ -33,17 +33,16 @@ function PACUP_SYS() {
   : #SYS
 }
 
-function PACUP_APT() {
-  sudo apt update
-  sudo apt$PACUP_YES full-upgrade
-  sudo apt$PACUP_YES autoremove
+function PACUP_PACMAN() {
+  sudo pacman -Syu
+  $PACUP_YES|sudo pacman -Rnsc $(pacman -Qtdq)  
 }
 
-if [ "$PACUP_MOD" == "apt" ]; then
-   PACUP_APT
+if [ "$PACUP_MOD" == "pacman" ]; then
+   PACUP_PACMAN
   if [ $? != 0 ]; then
-    echo -e "\nAPTコマンドの実行はRoot(管理者)権限を要求します｡\nもう一度お試しください｡\n"
-    PACUP_APT
+    echo -e "\nPacmanコマンドの実行はRoot(管理者)権限を要求します｡\nもう一度お試しください｡\n"
+    PACUP_PACMAN
   fi
   exit 0
 fi
