@@ -1,21 +1,21 @@
 #!/bin/bash
 
-if [ ! -f /etc/debian_version ];then
-  echo -e "このディストリビューションには､ \"pacup\" をインストール出来ません｡\n\nDebian系 もしくは Debian派生系のみ対応しています｡"
+if [ ! -f /etc/arch-release ];then
+  echo -e "Can't install \"pacup\" in this distro.\n\nArch and Arch-based distros are only supported."
   exit 1
 fi
 
 if [ `whoami` != 'root' ]; then
   sudo $BASH_SOURCE
   if [ $? != 0 ]; then
-    echo "Root(管理者)権限で実行してください"
+    echo "Need to be root or run with sudo."
     exit 1
   fi
   exit 0
 fi
 
 if [ ! -f ./pacup ]; then
-  echo -e "\"pacup\" ファイルが見つかりませんでした\n"
+  echo -e "\"pacup\" file not found.\n"
   exit 1
 fi
 
@@ -36,7 +36,7 @@ if [ -d ../デスクトップ ]; then
 elif [ -d ../Desktop ]; then
     cp -f ./pacup_Manual.txt ../Desktop
 else
-    echo "マニュアルファイルのコピーをスキップしました"
+    echo "Manual file copy skipped."
     exit 1
 fi
 
