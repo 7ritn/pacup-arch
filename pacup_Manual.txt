@@ -1,29 +1,37 @@
-【「pacup」コマンドの使い方】
-1. 端末エミュレーターを起動する
-2. 以下のように入力して実行する
+【"pacup" command usage】
+1. Launch terminal emulator
+2. Enter and execute the following
 ========================================
 pacup
 ========================================
 
-＜オプション＞
-上記のコマンドに以下の引数をつけると
-以下のオプションの実行ができます。
+<Options>
+The above command with the following
+arguments gives you the following options.
 ========================================
-「-y」
-　途中の質問に対して、すべて「yes」を返す
+"-y"
+  Return "yes" to all questions
+  in the middle
 ========================================
-「-p」
-　「pacman」コマンドに関する内容のみ実行
+"-p"
+  Run only for pacman commands
 ========================================
-「-h」
-　ヘルプの表示
+"-h"
+  Show help
 ========================================
 
-
-もしも「Flatpak」、「Snap」を追加したり、
-削除したりした場合は、以下のコマンドを実行して下さい。
+If you have added or removed "Flatpak",
+"Snap", or an AUR Helper, execute the
+following command.
 ========================================
 sudo rm /usr/local/bin/pacup
 cd ~/pacup
 sudo bash install_pacup.sh
 ========================================
+
+<AUR Helper>
+The following AUR helper are supported:
+ - yay
+ - paru
+ - pacaur
+ - pikaur
