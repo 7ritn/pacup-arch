@@ -57,5 +57,5 @@ if [ $? != 0 ]; then
     exit 1
   fi
 fi
-PACUP_APT
+PACUP_PACMAN
 exit 0
