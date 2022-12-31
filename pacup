@@ -15,7 +15,7 @@ while (($#>0)); do
       PACUP_MOD="pacman"
       ;;
     y|-y|--yes)
-      PACUP_YES="yes"
+      PACUP_YES="yes|"
       ;;
     h|-h|--help)
       usage
@@ -34,8 +34,10 @@ function PACUP_SYS() {
 }
 
 function PACUP_PACMAN() {
-  sudo pacman -Syu
-  $PACUP_YES|sudo pacman -Rnsc $(pacman -Qtdq)  
+  echo -e "\nUpdating Pacman packages......"
+  $PACUP_YES sudo pacman -Syu
+  echo -e "\nRemoving no-needed Pacman packages......"
+  $PACUP_YES sudo pacman -Rnsc $(pacman -Qtdq)  
 }
 
 if [ "$PACUP_MOD" == "pacman" ]; then
