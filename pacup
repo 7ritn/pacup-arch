@@ -3,9 +3,11 @@
 function usage() {
   cat <<EOM
 Usage: $(basename "$0") [OPTION]...
+
     -p          Run Pacman only
     -y          Skip typing 'y'
     -h          Show help
+
 EOM
 }
 
