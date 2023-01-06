@@ -52,9 +52,6 @@ function PACUP_SYS() {
 }
 
 function PACUP_AUR() {
-  if [ "$(whoami)" != "root" ]; then
-    echo -e "\nBecause you are running as root, the AUR operation is skipped."
-  fi
   if [ $(command -v yay) ]; then
     echo -e "Updating AUR packages..."
     yay -Sayu
@@ -104,6 +101,12 @@ fi
 
 PACUP_PACMAN
 PACUP_SYS
+
+if [ "$(whoami)" != "root" ]; then
+  echo -e "\nBecause you are running as root, the AUR operation is skipped."
+  echo -e "\nDone!"
+  exit 0
+fi
 PACUP_AUR
 
 echo -e "\nDone!"
