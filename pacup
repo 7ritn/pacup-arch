@@ -51,6 +51,33 @@ function PACUP_SYS() {
   fi
 }
 
+function PACUP_AUR() {
+  if [ "$(whoami)" != "root" ]; then
+    echo -e "\nBecause you are running as root, the AUR operation is skipped."
+  fi
+  if [ $(command -v yay) ]; then
+    echo -e "Updating AUR packages..."
+    yay -Sayu
+  fi
+  if [ $(command -v yay) ]; then
+    echo -e "Updating AUR packages..."
+    paru -Sayu
+  fi
+  if [ $(command -v yay) ]; then
+    echo -e "Updating AUR packages..."
+    pacaur -Sayu
+  fi
+  if [ $(command -v yay) ]; then
+    echo -e "Updating AUR packages..."
+    pikaur -Sayu
+  fi
+  if [ $(command -v yay) ]; then
+    echo -e "Updating AUR packages..."
+    aura -Au
+  fi
+}
+  
+
 if [ "$PACUP_MOD" == "pacman" ]; then
   sudo echo -n
   if [ $? != 0 ]; then
@@ -77,5 +104,7 @@ fi
 
 PACUP_PACMAN
 PACUP_SYS
+PACUP_AUR
+
 echo -e "\nDone!"
 exit 0
