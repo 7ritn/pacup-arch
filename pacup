@@ -15,7 +15,8 @@ while (($#>0)); do
       PACUP_MOD="pacman"
       ;;
     y|-y|--yes)
-      PACUP_YES="yes|"
+      PACUP_YES="yes |"
+      PACUP_Y=" -y"
       ;;
     h|-h|--help)
       usage
@@ -29,45 +30,50 @@ while (($#>0)); do
   shift
 done
 
-function PACUP_SYS() {
-  if [ $(command -v snap) ]; then
-    echo -e "\nRunning sudo snap refresh..."
-    sudo snap refresh
-  fi
-  if [ $(command -v flatpak) ]; then
-    echo -e "\nRunning $PACUP_YESsudo flatpak update..."
-    sudo flatpak update$PACUP_YES
-}
 
 function PACUP_PACMAN() {
   echo -e "\nUpdating Pacman packages..."
-  $PACUP_YES sudo pacman -Syu
+  ${PACUP_YES} sudo pacman -Syu
   echo -e "\nRemoving no-needed Pacman packages..."
-  $PACUP_YES sudo pacman -Rnsc $(pacman -Qtdq)  
+  ${PACUP_YES} sudo pacman -Rns $(pacman -Qtdq)  
+}
+
+function PACUP_SYS() {
+  if [ $(command -v snap) ]; then
+    echo -e "\nUpdating Snap packages..."
+    sudo snap refresh
+  fi
+  if [ $(command -v flatpak) ]; then
+    echo -e "\nUpdating Flatpak packages..."
+    sudo flatpak update${PACUP_Y}
+  fi
 }
 
 if [ "$PACUP_MOD" == "pacman" ]; then
-   PACUP_PACMAN
+  sudo echo -n
   if [ $? != 0 ]; then
     echo -e "\nPacman command requires root privileges.\nPlease try again.\n"
-    PACUP_PACMAN
+    sudo echo -n
+    if [ $? != 0 ]; then
+    echo -e "\nExecution terminated because privilege elevation failed."
+    exit 1
+    fi
   fi
+  PACUP_PACMAN
   exit 0
 fi
 
-if [ $(command -v flatpak) ]; then
-  echo -e "\nRunning $PACUP_YESflatpak update..."
-  $PACUP_YESflatpak update
-fi
-PACUP_SYS
+sudo echo -n
 if [ $? != 0 ]; then
   echo -e "\nRequesting root privileges.\nPlease try again.\n"
-  PACUP_SYS
+  sudo echo -n
   if [ $? != 0 ]; then
     echo -e "\nExecution terminated because privilege elevation failed."
     exit 1
   fi
 fi
+
 PACUP_PACMAN
-#AUR
+PACUP_SYS
+echo -e "\nDone!"
 exit 0
