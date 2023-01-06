@@ -27,3 +27,4 @@ sudo bash ./install_pacup.sh
 
 ## AURの対応状況
 2022/12/23 Yay、Paru、Pacaur、Pikaurに対応。
+2023/01/06 Auraに対応。またAURに関わるコードを大幅に変更。
