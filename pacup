@@ -30,13 +30,19 @@ while (($#>0)); do
 done
 
 function PACUP_SYS() {
-  : #SYS
+  if [ $(command -v snap) ]; then
+    echo -e "\nRunning sudo snap refresh..."
+    sudo snap refresh
+  fi
+  if [ $(command -v flatpak) ]; then
+    echo -e "\nRunning $PACUP_YESsudo flatpak update..."
+    sudo flatpak update$PACUP_YES
 }
 
 function PACUP_PACMAN() {
-  echo -e "\nUpdating Pacman packages......"
+  echo -e "\nUpdating Pacman packages..."
   $PACUP_YES sudo pacman -Syu
-  echo -e "\nRemoving no-needed Pacman packages......"
+  echo -e "\nRemoving no-needed Pacman packages..."
   $PACUP_YES sudo pacman -Rnsc $(pacman -Qtdq)  
 }
 
@@ -49,7 +55,10 @@ if [ "$PACUP_MOD" == "pacman" ]; then
   exit 0
 fi
 
-#FPK
+if [ $(command -v flatpak) ]; then
+  echo -e "\nRunning $PACUP_YESflatpak update..."
+  $PACUP_YESflatpak update
+fi
 PACUP_SYS
 if [ $? != 0 ]; then
   echo -e "\nRequesting root privileges.\nPlease try again.\n"
