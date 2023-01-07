@@ -12,12 +12,12 @@ Arch系 もしくは Manjaro系のディストリビューションで、パッ�
 sudo pacman -S git
 git clone https://github.com/Jin-Asanami/pacup-arch
 cd pacup-arch
-sudo bash ./install_pacup.sh
+sudo make DESTDIR='/usr/local' install 
 ```
 
 ## 詳細
-元々は「[**EtupOS**](https://etupos.penginn.com)」の開発者である「**ペンえぬ**」氏が作り､ 桜咲ヒロ氏が｢[**Flatpak**](https://flatpak.org)｣ と ｢[**Snap**](https://snapcraft.io)｣ のサポートを追加したコマンドです｡
-それをPacmanとAURに対応させたのがこの「pacup-arch」です。
+元々は「[**EtupOS**](https://etupos.penginn.com)」の開発者である「**ペンえぬ**」氏が作り､ 「**桜咲ヒロ**」氏が｢[**Flatpak**](https://flatpak.org)｣ と ｢[**Snap**](https://snapcraft.io)｣ のサポートを追加したコマンドです｡
+それを私がPacmanとAURに対応させたのがこの「pacup-arch」です。
 
 ## コマンド制作者
 - **ペンえぬ**  （テンプレートを作成）
