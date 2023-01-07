@@ -9,11 +9,10 @@ Arch系 もしくは Manjaro系のディストリビューションで、パッ�
 
 ## 「pacup-arch」のインストール方法
 ```
-sudo pacman -S git
-git clone https://github.com/Jin-Asanami/pacup-arch
-cd pacup-arch
-sudo make DESTDIR='/usr/local' install 
+yay -S pacup-arch
 ```
+
+(「yay -Sayu」の部分は以下略)
 
 ## 詳細
 元々は「[**EtupOS**](https://etupos.penginn.com)」の開発者である「**ペンえぬ**」氏が作り､ 「**桜咲ヒロ**」氏が｢[**Flatpak**](https://flatpak.org)｣ と ｢[**Snap**](https://snapcraft.io)｣ のサポートを追加したコマンドです｡
