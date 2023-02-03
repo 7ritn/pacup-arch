@@ -9,10 +9,6 @@ pacup
 The above command with the following
 arguments gives you the following options.
 ========================================
-"-y"
-  Return "yes" to all questions
-  in the middle
-========================================
 "-p"
   Run only for pacman commands
 ========================================
@@ -35,3 +31,4 @@ The following AUR helper are supported:
  - paru
  - pacaur
  - pikaur
+ - aura
