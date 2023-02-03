@@ -5,10 +5,7 @@ all:
 
 install:
 	@mkdir -p $(DESTDIR)$(PREFIX)/bin
-	@mkdir -p $(DESTDIR)$(PREFIX)/share
-	@mkdir -p $(DESTDIR)$(PREFIX)/share/doc/
 	@mkdir -p $(DESTDIR)$(PREFIX)/share/doc/pacup
-	@mkdir -p $(DESTDIR)$(PREFIX)/share/applications
 	@cp -p pacup $(DESTDIR)$(PREFIX)/bin/pacup
 	@cp -p pacup_Manual.txt $(DESTDIR)$(PREFIX)/share/doc/pacup
 	@cp -p pacup.desktop $(DESTDIR)$(PREFIX)/share/applications
