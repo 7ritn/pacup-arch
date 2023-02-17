@@ -31,8 +31,23 @@ done
 function PACUP_PACMAN() {
   echo -e "\nUpdating Pacman packages..."
   sudo pacman -Syu
-  echo -e "\nRemoving no-needed Pacman packages..."
-  sudo pacman -Rns $(pacman -Qtdq)  
+}
+
+function PACUP_ORPHAN() {
+  echo -e "\nChecking for orphaned packages..."
+  pkgs="$(pacman -Qtdq)"
+  if [[ ! -z "$pkgs" ]]
+  then 
+    echo -e "The following packages are installed but not required (anymore):\n$pkgs\n"
+    read -p "Do you want to (r)emove, mark them as (e)xplicit or (i)gnore? [r|e|I] " choice
+    case "$choice" in
+      r|R ) echo -e "Removing orphaned packages\n" && sudo pacman -Rns $(pacman -Qtdq);;
+      e|E ) echo -e "Marking orphaned packages as explicit\n" && sudo pacman -D --asexplicit $pkgs;;
+      *   ) echo "No orphaned packages removed";;
+    esac
+  else
+    echo "No orphaned packages."
+  fi
 }
 
 function PACUP_SYS() {
@@ -90,6 +105,7 @@ if [ "$PACUP_MOD" == "pacman" ]; then
     fi
   fi
   PACUP_PACMAN
+  PACUP_ORPHAN
   exit 0
 fi
 
@@ -106,6 +122,7 @@ fi
 PACUP_PACMAN
 PACUP_SYS
 PACUP_AUR_ROOT
+PACUP_ORPHAN
 
 echo -e "\nDone!"
 exit 0
