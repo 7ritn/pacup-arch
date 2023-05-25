@@ -29,8 +29,17 @@ done
 
 
 function PACUP_PACMAN() {
-  echo -e "\nUpdating Pacman packages..."
-  sudo pacman -Syu
+  echo -e "Updating Pacman packages..."
+  if [[ "$(whoami)" != "root" && $(command -v checkupdates) ]]; then
+    checkupdates > /dev/null
+    if [ $? == 0 ]; then
+      sudo pacman -Syu
+    else
+      echo "No updates available."
+    fi
+  else
+    sudo pacman -Syu
+  fi
 }
 
 function PACUP_ORPHAN() {
@@ -53,11 +62,22 @@ function PACUP_ORPHAN() {
 function PACUP_SYS() {
   if [ $(command -v snap) ]; then
     echo -e "\nUpdating Snap packages..."
-    sudo snap refresh
+    pkgs="$(sudo snap refresh --list)"
+    if [[ ! -z "$pkgs" ]]; then 
+      sudo snap refresh
+    else
+      echo "No updates available."
+    fi
   fi
+
   if [ $(command -v flatpak) ]; then
     echo -e "\nUpdating Flatpak packages..."
-    sudo flatpak update
+    pkgs="$(flatpak remote-ls --updates)"
+    if [[ ! -z "$pkgs" ]]; then 
+      sudo flatpak update
+    else
+      echo "No updates available."
+    fi
   fi
 }
 
@@ -71,25 +91,26 @@ function PACUP_AUR_ROOT() {
 }
 
 function PACUP_AUR() {
-  if [ $(command -v yay) ]; then
-    echo -e "Updating AUR packages..."
-    yay -Sayu
-  fi
-  if [ $(command -v paru) ]; then
-    echo -e "Updating AUR packages..."
-    paru -Sayu
-  fi
-  if [ $(command -v pacaur) ]; then
-    echo -e "Updating AUR packages..."
-    pacaur -Sayu
-  fi
-  if [ $(command -v pikaur) ]; then
-    echo -e "Updating AUR packages..."
-    pikaur -Sayu
-  fi
-  if [ $(command -v aura) ]; then
-    echo -e "Updating AUR packages..."
-    aura -Au
+  yay_available=$(command -v yay)
+  paru_available=$(command -v paru)
+  pacaur_available=$(command -v pacaur)
+  pikaur_available=$(command -v pikaur)
+  aura_available=$(command -v yay)
+
+  if [[ $yay_available || $paru_available || $pacaur_available || $pikaur_available || $aura_available ]]; then
+    echo -e "\nUpdating AUR packages..."
+
+    if [ $yay_available ]; then
+      yay -Sayu
+    elif [ $paru_available ]; then
+      paru -Sayu
+    elif [ $pacaur_available ]; then
+      pacaur -Sayu
+    elif [ $pikaur_available ]; then
+      pikaur -Sayu
+    elif [ $aura_available ]; then
+      aura -Au
+    fi
   fi
 }
   
@@ -105,18 +126,7 @@ if [ "$PACUP_MOD" == "pacman" ]; then
     fi
   fi
   PACUP_PACMAN
-  PACUP_ORPHAN
   exit 0
-fi
-
-sudo echo -n
-if [ $? != 0 ]; then
-  echo -e "\nRequesting root privileges.\nPlease try again.\n"
-  sudo echo -n
-  if [ $? != 0 ]; then
-    echo -e "\nExecution terminated because privilege elevation failed."
-    exit 1
-  fi
 fi
 
 PACUP_PACMAN
