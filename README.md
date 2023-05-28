@@ -19,7 +19,7 @@ Clone the repository and then run `make install` to install it system-wide. Othe
 
 ### AUR
 
-Currently unavailable.
+Available here: https://aur.archlinux.org/packages/pacup-arch-git
 
 ## Contributors
 
