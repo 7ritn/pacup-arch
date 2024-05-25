@@ -74,7 +74,7 @@ function PACUP_SYS() {
     echo -e "\nUpdating Flatpak packages..."
     pkgs="$(flatpak remote-ls --updates)"
     if [[ ! -z "$pkgs" ]]; then 
-      sudo flatpak update
+      flatpak update
     else
       echo "No updates available."
     fi
