@@ -35,7 +35,7 @@ function PACUP_PACMAN() {
     if [ $? == 0 ]; then
       sudo pacman -Syu
     else
-      echo "No updates available."
+      echo "No Pacman updates available."
     fi
   else
     sudo pacman -Syu
@@ -72,11 +72,17 @@ function PACUP_SYS() {
 
   if [ $(command -v flatpak) ]; then
     echo -e "\nUpdating Flatpak packages..."
-    pkgs="$(flatpak remote-ls --updates)"
-    if [[ ! -z "$pkgs" ]]; then 
-      sudo flatpak update
+
+    system_pkgs="$(flatpak remote-ls --updates)"
+    user_pkgs="$(flatpak remote-ls --user --updates)"
+    all_pkgs="$system_pkgs$user_pkgs"
+
+    # Check if there are any updates available
+    if [[ ! -z "$all_pkgs" ]]; then
+      sudo flatpak update --noninteractive --assumeyes
+      flatpak update --user --noninteractive --assumeyes
     else
-      echo "No updates available."
+      echo "No Flatpak updates available."
     fi
   fi
 }
